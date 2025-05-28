@@ -1,4 +1,4 @@
-// chatbot/backend/models/db.js
+// backend/models/db.js
 
 import mysql from 'mysql2';
 import dotenv from 'dotenv';
@@ -10,7 +10,7 @@ const connectdb = mysql.createConnection({
     host: process.env.DB_HOST,
     user: process.env.DB_USER,
     password: process.env.DB_PASSWORD,
-    database: process.env.DB_DATABASE,
+    database: process.env.DB_NAME,
 });
 
 // Conectar y manejar errores

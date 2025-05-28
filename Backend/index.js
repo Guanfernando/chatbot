@@ -3,8 +3,10 @@
 // creaciom del servidor
 import express from  'express';
 import cors from 'cors';
-import connectdb from './models/db.js';
+import  connectdb from './models/db.js';
 import messagesRoutes from './routes/messages.routes.js';
+
+import { swaggerUi, swaggerSpec } from './swagger.js';
 
 
 import dotenv from 'dotenv';
@@ -15,14 +17,18 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
+// ruta para la documentación Swagger
+app.use('/api/docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
+
 // Routes
 app.use('/api', messagesRoutes);
 
 console.log('Usuario:', process.env.DB_USER);
 console.log('Contraseña:', process.env.DB_PASSWORD);
+console.log('Host:', process.env.DB_HOST);
 console.log('Base de datos:', process.env.DB_NAME);
 
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 3001;
 
 app.get ('/', (req,res,next) => {
     console.log('variable de entorno: ', process.env);
@@ -39,4 +45,5 @@ app.get ('/', (req,res,next) => {
 
 app.listen(PORT, () =>{
     console.log(`Servidor escuchado en en https://localhost:${PORT}`);
+    console.log(`Documentación de la API disponible en http://localhost:${PORT}/api/docs`);
 });
